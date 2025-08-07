@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="vn">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>M-Launcher|Trung tâm trò chơi tuổi thơ 9x </title>
+  <title>M-Game | Trung tâm trò chơi tuổi thơ 9x </title>
   <style>
+    /* ...Giữ nguyên phần CSS như bản gốc... */
     * {
       margin: 0;
       padding: 0;
@@ -16,11 +17,11 @@
       background: #eee;
       overflow-x: hidden;
     }
-
+    /* ...phần còn lại của CSS giữ nguyên... */
     .hero {
       position: relative;
       height: 100vh;
-      background: url('media/background.jpg') center center/cover no-repeat;
+      background: url('media/mgame.png') center center/cover no-repeat;
       background-attachment: fixed;
       display: flex;
       align-items: center;
@@ -34,7 +35,6 @@
     .scrolled .hero img {
       transform: translateY(-120px) scale(0.9);
     }
-
     .servers {
       background: #eee;
       display: flex;
@@ -133,10 +133,8 @@
       background-color: #ff6600;
       transform: scale(1.1);
     }
-
-    /* --- Footer --- */
     .footer-about {
-      max-width: 180px; /* Limita el ancho */
+      max-width: 180px;
     }
     .footer-about p {
       font-size: 0.95rem;
@@ -171,7 +169,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('media/background.jpg') center center/cover no-repeat;
+      background: url('media/mgame.png') center center/cover no-repeat;
       background-attachment: fixed;
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -232,8 +230,6 @@
       margin-top: 15px;
       font-size: 0.9rem;
     }
-
-    /* --- Media Queries para mobile y tablet --- */
     @media (max-width: 1024px) {
       .server-container {
         max-width: 90vw;
@@ -253,7 +249,6 @@
         min-width: 120px;
       }
     }
-
     @media (max-width: 768px) {
       .server-container {
         flex-direction: column;
@@ -288,8 +283,6 @@
       .scrolled .hero img {
         transform: translateY(-80px) scale(0.85);
       }
-
-      /* Footer en columna */
       .footer-columns {
         flex-direction: column;
         gap: 25px;
@@ -317,39 +310,39 @@
   <section class="servers" id="servers">
     <h2>
       <img src="media/icons/swords.png" alt="Emoji" style="width:48px; height:48px; vertical-align:middle; margin-right:8px; position: relative; top: -3px;" />
-      M-Launcher|Trung tâm trò chơi tuổi thơ 9x
+      M-Game | Trung tâm trò chơi tuổi thơ 9x
       <img src="media/icons/jewel.png" alt="Emoji" style="width:48px; height:48px; vertical-align:middle; margin-left:8px; position: relative; top: -9px;" />
     </h2>
     <div class="server-container">
       <div class="server-card">
-        <img src="media/servidores/1.jpg" alt="Servidor 1" />
+        <img src="media/servidores/1.jpg" alt="MU Online" />
         <div class="server-overlay">
-          <h3>MU Online</h3>
+          <h3>MU ONLINE</h3>
           <ul>
-            <li>Experiencia: 500x</li>
-            <li>Drop: 60%</li>
-            <li>Versión: Season 18</li>
-            <li>MU Helper / OFF Helper</li>
-            <li>VIP disponible</li>
-            <li>Item Shop</li>
+            <li>Kinh nghiệm: 500x</li>
+            <li>Tỉ lệ rơi đồ: 40%</li>
+            <li>Phiên bản: Season 6</li>
+            <li>Có MU Helper / OFF Helper</li>
+            <li>VIP không tăng dame</li>
+            <li>Cửa hàng vật phẩm</li>
           </ul>
-          <button>INGRESAR</button>
+          <button>VÀO GAME</button>
         </div>
       </div>
 
       <div class="server-card">
-        <img src="media/servidores/2.jpg" alt="Servidor 2" />
+        <img src="media/servidores/3.jpg" alt="Võ Lâm Truyền Kỳ" />
         <div class="server-overlay">
           <h3>VÕ LÂM TRUYỀN KỲ</h3>
           <ul>
-            <li>Experiencia: 1000x</li>
-            <li>Drop: 80%</li>
-            <li>Versión: Season 18</li>
-            <li>MU Helper / OFF Helper</li>
-            <li>VIP disponible</li>
-            <li>Item Shop</li>
+            <li>Cấp: 200</li>
+            <li>Tỉ lệ rơi đồ: 30%</li>
+            <li>Phiên bản: Hoàng Kim Môn Phái</li>
+            <li>Thể loại: Tu Tiên - Huyền Huyễn</li>
+            <li>VIP không tăng dame</li>
+            <li>Cửa hàng vật phẩm</li>
           </ul>
-          <button>INGRESAR</button>
+          <button>VÀO GAME</button>
         </div>
       </div>
     </div>
@@ -361,41 +354,41 @@
         <img src="media/logo.png" alt="Logo" style="max-width:120px;" />
       </div>
       <div class="footer-column footer-about">
-        <h4>Quiénes Somos</h4>
+        <h4>Về Chúng Tôi</h4>
         <p>
-          Somos un servidor de MU Online pensado para todos los estilos de juego. Competitivo, divertido y con una comunidad activa que crece día a día.
+          Chúng tôi là cộng đồng MU Online và Võ Lâm Truyền Kỳ dành cho tất cả game thủ yêu thích phong cách xưa. Nơi giải trí, cạnh tranh và gắn kết tuổi thơ 9x!
         </p>
       </div>
       <div class="footer-column">
-        <h4>Usuario</h4>
+        <h4>Thành Viên</h4>
         <ul>
           <li>Wiki</li>
-          <li>Promociones</li>
-          <li>Soporte</li>
+          <li>Sự kiện & Khuyến mãi</li>
+          <li>Hỗ trợ</li>
         </ul>
       </div>
       <div class="footer-column">
-        <h4>Comunidad</h4>
+        <h4>Cộng Đồng</h4>
         <ul>
           <li>Whatsapp</li>
           <li>Discord</li>
           <li>Instagram</li>
           <li>Facebook</li>
-          <li>Foro</li>
+          <li>Diễn đàn</li>
         </ul>
       </div>
       <div class="footer-column">
-        <h4>Legales</h4>
+        <h4>Pháp Lý</h4>
         <ul>
-          <li>Política de Privacidad</li>
-          <li>Política de Cookies</li>
-          <li>Términos y Condiciones</li>
+          <li>Chính sách Bảo mật</li>
+          <li>Chính sách Cookie</li>
+          <li>Điều khoản sử dụng</li>
         </ul>
       </div>
     </div>
     <div class="copyright">
-      &copy; 2025 M-Launcher | Trung tâm trò chơi tuổi thơ 9x |
-       Administrator mtv.devsoft@gmail.com.
+      &copy; 2025 M-Game | Trung tâm trò chơi tuổi thơ 9x |
+       Quản trị viên: mtv.devsoft@gmail.com.
     </div>
   </footer>
 
