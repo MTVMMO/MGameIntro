@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="vn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>M-Launcher|Trung tâm trò chơi tuổi thơ 9x </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      background: #eee;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      background: url('media/background.jpg') center center/cover no-repeat;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+    .hero img {
+      max-width: 400px;
+      transition: transform 0.5s ease;
+    }
+    .scrolled .hero img {
+      transform: translateY(-120px) scale(0.9);
+    }
+
+    .servers {
+      background: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 60px 20px;
+    }
+    .servers h2 {
+      font-size: 2.5rem;
+      color: #222;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .servers.visible h2 {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .server-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .server-card {
+      position: relative;
+      flex: 1;
+      max-width: 500px;
+      aspect-ratio: 4 / 5;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+    .server-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .server-card:hover img {
+      transform: scale(1.05);
+    }
+    .server-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #eee;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .server-card:hover .server-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .server-overlay h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    .server-overlay ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0;
+      line-height: 1.5;
+      font-size: 1rem;
+    }
+    .server-overlay button {
+      margin-top: 10px;
+      padding: 14px 28px;
+      background-color: #333;
+      color: #eee;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      min-width: 130px;
+    }
+    .server-overlay button:hover {
+      background-color: #ff6600;
+      transform: scale(1.1);
+    }
+
+    /* --- Footer --- */
+    .footer-about {
+      max-width: 180px; /* Limita el ancho */
+    }
+    .footer-about p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #ddd;
+      text-align: left;
+    }
+    .footer-column p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: #ddd;
+    }
+    footer {
+      position: relative;
+      height: 35vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #eee;
+      text-align: center;
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('media/background.jpg') center center/cover no-repeat;
+      background-attachment: fixed;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: -1;
+    }
+    footer.visible::before {
+      opacity: 1;
+    }
+    .footer-columns {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 50px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .footer-column {
+      text-align: left;
+      min-width: 150px;
+    }
+    .footer-column h4 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-column ul li {
+      margin: 5px 0;
+      position: relative;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+    .footer-column ul li:hover {
+      color: #ff6600;
+    }
+    .footer-column ul li.clicked::before {
+      content: "•";
+      position: absolute;
+      left: -15px;
+      top: 0;
+      color: #ff6600;
+      opacity: 0;
+      transform: translateX(-5px);
+      animation: bulletFade 0.4s forwards;
+    }
+    @keyframes bulletFade {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    .copyright {
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    /* --- Media Queries para mobile y tablet --- */
+    @media (max-width: 1024px) {
+      .server-container {
+        max-width: 90vw;
+      }
+      .servers h2 {
+        font-size: 2rem;
+      }
+      .server-overlay h3 {
+        font-size: 1.5rem;
+      }
+      .server-overlay ul {
+        font-size: 0.9rem;
+      }
+      .server-overlay button {
+        padding: 12px 24px;
+        font-size: 1rem;
+        min-width: 120px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .server-container {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .server-card {
+        max-width: 90vw;
+        aspect-ratio: auto;
+        height: auto;
+      }
+      .servers {
+        padding: 40px 15px;
+      }
+      .servers h2 {
+        font-size: 1.8rem;
+      }
+      .server-overlay h3 {
+        font-size: 1.3rem;
+      }
+      .server-overlay ul {
+        font-size: 0.85rem;
+      }
+      .server-overlay button {
+        padding: 14px 30px;
+        font-size: 1.1rem;
+        min-width: 140px;
+      }
+      .hero img {
+        max-width: 250px;
+        transition: transform 0.5s ease;
+      }
+      .scrolled .hero img {
+        transform: translateY(-80px) scale(0.85);
+      }
+
+      /* Footer en columna */
+      .footer-columns {
+        flex-direction: column;
+        gap: 25px;
+        align-items: center;
+      }
+      .footer-column {
+        min-width: auto;
+        width: 90%;
+        max-width: 320px;
+        text-align: left;
+      }
+      footer {
+        height: auto;
+        padding: 30px 15px 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <img src="media/logo.png" alt="Logo MU Online" />
+  </section>
+
+  <section class="servers" id="servers">
+    <h2>
+      <img src="media/icons/swords.png" alt="Emoji" style="width:48px; height:48px; vertical-align:middle; margin-right:8px; position: relative; top: -3px;" />
+      M-Launcher|Trung tâm trò chơi tuổi thơ 9x
+      <img src="media/icons/jewel.png" alt="Emoji" style="width:48px; height:48px; vertical-align:middle; margin-left:8px; position: relative; top: -9px;" />
+    </h2>
+    <div class="server-container">
+      <div class="server-card">
+        <img src="media/servidores/1.jpg" alt="Servidor 1" />
+        <div class="server-overlay">
+          <h3>MU Online</h3>
+          <ul>
+            <li>Experiencia: 500x</li>
+            <li>Drop: 60%</li>
+            <li>Versión: Season 18</li>
+            <li>MU Helper / OFF Helper</li>
+            <li>VIP disponible</li>
+            <li>Item Shop</li>
+          </ul>
+          <button>INGRESAR</button>
+        </div>
+      </div>
+
+      <div class="server-card">
+        <img src="media/servidores/2.jpg" alt="Servidor 2" />
+        <div class="server-overlay">
+          <h3>VÕ LÂM TRUYỀN KỲ</h3>
+          <ul>
+            <li>Experiencia: 1000x</li>
+            <li>Drop: 80%</li>
+            <li>Versión: Season 18</li>
+            <li>MU Helper / OFF Helper</li>
+            <li>VIP disponible</li>
+            <li>Item Shop</li>
+          </ul>
+          <button>INGRESAR</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-columns">
+      <div class="footer-column">
+        <img src="media/logo.png" alt="Logo" style="max-width:120px;" />
+      </div>
+      <div class="footer-column footer-about">
+        <h4>Quiénes Somos</h4>
+        <p>
+          Somos un servidor de MU Online pensado para todos los estilos de juego. Competitivo, divertido y con una comunidad activa que crece día a día.
+        </p>
+      </div>
+      <div class="footer-column">
+        <h4>Usuario</h4>
+        <ul>
+          <li>Wiki</li>
+          <li>Promociones</li>
+          <li>Soporte</li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Comunidad</h4>
+        <ul>
+          <li>Whatsapp</li>
+          <li>Discord</li>
+          <li>Instagram</li>
+          <li>Facebook</li>
+          <li>Foro</li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legales</h4>
+        <ul>
+          <li>Política de Privacidad</li>
+          <li>Política de Cookies</li>
+          <li>Términos y Condiciones</li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      &copy; 2025 M-Launcher | Trung tâm trò chơi tuổi thơ 9x |
+       Administrator mtv.devsoft@gmail.com.
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', function () {
+      document.body.classList.toggle('scrolled', window.scrollY > 50);
+
+      const footer = document.getElementById('footer');
+      const footerTop = footer.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      if (footerTop < windowHeight) {
+        footer.classList.add('visible');
+      } else {
+        footer.classList.remove('visible');
+      }
+
+      const serversSection = document.getElementById('servers');
+      const serversTop = serversSection.getBoundingClientRect().top;
+      if (serversTop < windowHeight - 100) {
+        serversSection.classList.add('visible');
+      }
+    });
+
+    document.querySelectorAll('.footer-column ul li').forEach((item) => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.footer-column ul li').forEach((li) =>
+          li.classList.remove('clicked')
+        );
+        item.classList.add('clicked');
+      });
+    });
+  </script>
+</body>
+</html>
